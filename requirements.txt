@@ -1,0 +1,50 @@
+# Core packages
+ipykernel                # Required for running Jupyter notebooks
+pandas                   # Data manipulation and analysis
+numpy                    # Numerical computing and array operations
+
+# Visualization libraries
+matplotlib               # Basic plotting and visualization
+plotly                   # Interactive visualizations
+seaborn                  # Statistical data visualization based on matplotlib
+
+# Scientific computing and ML
+scipy                    # Scientific and technical computing
+scikit-learn             # Classical machine learning algorithms
+imblearn                 # Handling imbalanced datasets (SMOTE, etc.)
+
+# Gradient boosting libraries
+xgboost                  # Extreme Gradient Boosting (efficient tree-based ML)
+catboost                 # Gradient boosting library by Yandex, works well with categorical features
+
+# MongoDB interaction
+pymongo                  # MongoDB client for Python
+
+# Local module import
+from_root                # Helps import modules from project root (often used in modular projects)
+
+# Model monitoring
+evidently==0.2.8         # Data & model drift monitoring
+
+# Serialization
+dill                     # Serialize Python objects (more flexible than pickle)
+
+# Config handling
+PyYAML                   # Parse YAML config files
+
+# Custom/utility library (possibly from your own project)
+neuro_mf                 # Not a standard package – possibly a custom module for neural matrix factorization or similar
+
+# AWS services
+boto3                    # AWS SDK for Python
+mypy-boto3-s3            # Type hints for boto3's S3 module
+botocore                 # Core functionality for boto3 (usually auto-installed)
+
+# Web API (FastAPI)
+fastapi                  # High-performance web framework for APIs
+uvicorn                  # ASGI server for FastAPI
+jinja2                   # Templating engine used in FastAPI or Flask
+python-multipart         # Handle file uploads in FastAPI
+
+# Editable install of your current project
+-e .                     # Installs the current directory as a package (editable mode, useful in development)
