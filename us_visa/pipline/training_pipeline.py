@@ -116,7 +116,7 @@ class TrainPipeline:  # Defines the entire ML training pipeline class
         except Exception as e:  # If error occurs
             raise USvisaException(e, sys)  # Raise custom exception
         
-# write in demo.py
+# write in demo.py to call method run_pipeline()
 # from us_visa.pipline.training_pipeline import TrainPipeline
 
 # obj = TrainPipeline()
