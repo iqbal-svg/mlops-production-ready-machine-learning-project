@@ -14,6 +14,11 @@ TEST_FILE_NAME: str = "test.csv"
 FILE_NAME: str = "usvisa.csv"
 MODEL_FILE_NAME = "model.pkl"
 
+TARGET_COLUMN = "case_status"
+CURRENT_YEAR = date.today().year
+PREPROCSSING_OBJECT_FILE_NAME = "preprocessing.pkl"
+SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
+
 #Data Ingestion related constant start with DATA_INGESTION VAR NAME
 # MongoDB collection name where raw data is stored
 DATA_INGESTION_COLLECTION_NAME: str = "visa_data"  
