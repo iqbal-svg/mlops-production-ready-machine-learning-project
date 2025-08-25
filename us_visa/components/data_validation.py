@@ -2,8 +2,9 @@ import json  # Provides functions to work with JSON data (load, dump, parse etc.
 import sys   # Gives access to system-specific parameters and functions (used in exception handling)
 
 import pandas as pd  # Pandas library for data manipulation and analysis
-from evidently.model_profile import Profile  # Used to create a data drift profile report
-from evidently.model_profile.sections import DataDriftProfileSection  # Section of Evidently report specifically for data drift
+from evidently import Report  # Used to create a data drift profile report
+
+from evidently.metrics import ValueDrift # Section of Evidently report specifically for data drift
 
 from pandas import DataFrame  # Importing DataFrame type hint directly for cleaner type annotations
 
@@ -75,6 +76,8 @@ class DataValidation:  # Class responsible for validating data
             return pd.read_csv(file_path)  # Read CSV file and return dataframe
         except Exception as e:
             raise USvisaException(e, sys)  # Raise custom exception
+        
+    
 
     def detect_dataset_drift(self, reference_df: DataFrame, current_df: DataFrame) -> bool:
         """
