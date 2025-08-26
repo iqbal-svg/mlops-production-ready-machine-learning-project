@@ -14,7 +14,7 @@ from us_visa.utils.main_utils import read_yaml_file, write_yaml_file  # Helper f
 from us_visa.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact  # Data classes to store artifacts
 from us_visa.entity.config_entity import DataValidationConfig  # Configuration class for data validation
 from us_visa.constants import SCHEMA_FILE_PATH  # Constant that stores the schema file path
-
+import os
 
 import json
 
@@ -93,34 +93,43 @@ class DataValidation:  # Class responsible for validating data
 
     
 
-   
+    
         
     
-    
-    def detect_dataset_drift(self, reference_df: pd.DataFrame, current_df: pd.DataFrame) -> bool:
-        """
-        Detect dataset drift between reference (train) and current (test) dataframes.
-        Works with Evidently v0.7.12
-        """
+    def detect_dataset_drift(self, reference_df: DataFrame, current_df: DataFrame) -> bool:
         try:
-            # Create drift report with DataDriftPreset
-            data_drift_report = Report(metrics=[DataDriftPreset()])
-            data_drift_report.run(reference_data=reference_df, current_data=current_df)
+            from evidently import Report
+            from evidently.presets import DataDriftPreset
 
-            # Get JSON report as Python dict
-            report_dict = json.loads(data_drift_report.json())
+            # 1. Create and run the report
+            report = Report([DataDriftPreset()])
+            eval_result = report.run(current_data=current_df, reference_data=reference_df)
 
-            # Extract drift results
-            drift_result = report_dict["metrics"][0]["result"]
-            n_features = drift_result["number_of_columns"]
-            n_drifted_features = drift_result["number_of_drifted_columns"]
-            drift_status = drift_result["dataset_drift"]
+            # 2. Ensure directory exists
+            html_path = self.data_validation_config.drift_report_file_path.replace(".yaml", ".html")
+            os.makedirs(os.path.dirname(html_path), exist_ok=True)
 
-            print(f"📊 Drift detected in {n_drifted_features}/{n_features} features")
-            return drift_status
+            # 3. Save HTML report
+            eval_result.save_html(html_path)
+
+            # 4. Save dict version in YAML
+            report_dict = eval_result.dict()
+            write_yaml_file(
+                file_path=self.data_validation_config.drift_report_file_path,
+                content=report_dict
+            )
+
+            # 5. Extract drift results
+            drift_info = report_dict["metrics"][0]#["result"]
+            n_features = drift_info["number_of_columns"]
+            n_drifted_features = drift_info["number_of_drifted_columns"]
+            dataset_drift = drift_info["dataset_drift"]
+
+            logging.info(f"{n_drifted_features}/{n_features} features show drift.")
+            return dataset_drift
 
         except Exception as e:
-            raise RuntimeError(f"Error in dataset drift detection: {e}")
+            raise USvisaException(e, sys) from e
     
     # def detect_dataset_drift(self, reference_df: DataFrame, current_df: DataFrame) -> bool:
     #     """
