@@ -16,6 +16,9 @@ from us_visa.entity.config_entity import DataValidationConfig  # Configuration c
 from us_visa.constants import SCHEMA_FILE_PATH  # Constant that stores the schema file path
 
 
+import json
+
+
 
 
 
@@ -94,31 +97,54 @@ class DataValidation:  # Class responsible for validating data
         
     
     
-
-    
-    def detect_dataset_drift(self, reference_df: DataFrame, current_df: DataFrame) -> bool:
+    def detect_dataset_drift(self, reference_df: pd.DataFrame, current_df: pd.DataFrame) -> bool:
         """
-        Detects dataset drift between reference (train) and current (test) dataframes.
+        Detect dataset drift between reference (train) and current (test) dataframes.
+        Works with Evidently v0.7.12
         """
         try:
-            #data_drift_profile = Profile(sections=[DataDriftProfileSection()])  # Create profile with drift section
+            # Create drift report with DataDriftPreset
             data_drift_report = Report(metrics=[DataDriftPreset()])
-            ValueDrift.calculate(reference_df, current_df)  # Compare train vs test data
+            data_drift_report.run(reference_data=reference_df, current_data=current_df)
 
-            report = ValueDrift.json()  # Get report in JSON format
-            json_report = json.loads(report)  # Convert JSON string to dictionary
+            # Get JSON report as Python dict
+            report_dict = json.loads(data_drift_report.json())
 
-            write_yaml_file(file_path=self.data_validation_config.drift_report_file_path, content=json_report)  
-            # Save drift report to YAML file
+            # Extract drift results
+            drift_result = report_dict["metrics"][0]["result"]
+            n_features = drift_result["number_of_columns"]
+            n_drifted_features = drift_result["number_of_drifted_columns"]
+            drift_status = drift_result["dataset_drift"]
 
-            n_features = json_report["data_drift"]["data"]["metrics"]["n_features"]  # Total number of features
-            n_drifted_features = json_report["data_drift"]["data"]["metrics"]["n_drifted_features"]  # Number of drifted features
+            print(f"📊 Drift detected in {n_drifted_features}/{n_features} features")
+            return drift_status
 
-            logging.info(f"{n_drifted_features}/{n_features} drift detected.")  # Log drift results
-            drift_status = json_report["data_drift"]["data"]["metrics"]["dataset_drift"]  # Boolean drift status
-            return drift_status  # Return True if drift, else False
         except Exception as e:
-            raise USvisaException(e, sys) from e
+            raise RuntimeError(f"Error in dataset drift detection: {e}")
+    
+    # def detect_dataset_drift(self, reference_df: DataFrame, current_df: DataFrame) -> bool:
+    #     """
+    #     Detects dataset drift between reference (train) and current (test) dataframes.
+    #     """
+    #     try:
+    #         #data_drift_profile = Profile(sections=[DataDriftProfileSection()])  # Create profile with drift section
+    #         data_drift_report = Report(metrics=[DataDriftPreset()])
+    #         ValueDrift.calculate(reference_df, current_df)  # Compare train vs test data
+
+    #         report = ValueDrift.json()  # Get report in JSON format
+    #         json_report = json.loads(report)  # Convert JSON string to dictionary
+
+    #         write_yaml_file(file_path=self.data_validation_config.drift_report_file_path, content=json_report)  
+    #         # Save drift report to YAML file
+
+    #         n_features = json_report["data_drift"]["data"]["metrics"]["n_features"]  # Total number of features
+    #         n_drifted_features = json_report["data_drift"]["data"]["metrics"]["n_drifted_features"]  # Number of drifted features
+
+    #         logging.info(f"{n_drifted_features}/{n_features} drift detected.")  # Log drift results
+    #         drift_status = json_report["data_drift"]["data"]["metrics"]["dataset_drift"]  # Boolean drift status
+    #         return drift_status  # Return True if drift, else False
+    #     except Exception as e:
+    #         raise USvisaException(e, sys) from e
 
     def initiate_data_validation(self) -> DataValidationArtifact:
         """
