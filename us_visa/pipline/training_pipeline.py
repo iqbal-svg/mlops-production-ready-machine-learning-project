@@ -5,23 +5,23 @@ from us_visa.logger import logging  # Custom logging module for logging info, wa
 # Importing pipeline components (each represents a stage in ML pipeline)
 from us_visa.components.data_ingestion import DataIngestion  # Responsible for fetching and splitting data into train/test
 from us_visa.components.data_validation import DataValidation  # Responsible for checking data quality and schema validation
-# from us_visa.components.data_transformation import DataTransformation  # Handles preprocessing, scaling, feature engineering
+from us_visa.components.data_transformation import DataTransformation  # Handles preprocessing, scaling, feature engineering
 # from us_visa.components.model_trainer import ModelTrainer  # Responsible for training ML/DL models
 # from us_visa.components.model_evaluation import ModelEvaluation  # Responsible for evaluating model performance
 # from us_visa.components.model_pusher import ModelPusher  # Responsible for pushing final model to deployment/storage
 
 # Importing config entities (input configurations for each pipeline component)
 from us_visa.entity.config_entity import (DataIngestionConfig,  # Config for ingestion
-                                          DataValidationConfig)  # Config for validation
-                                        #   DataTransformationConfig,  # Config for transformation
+                                          DataValidationConfig,  # Config for validation
+                                          DataTransformationConfig)  # Config for transformation
                                         #   ModelTrainerConfig,  # Config for trainer
                                         #   ModelEvaluationConfig,  # Config for evaluation
                                         #   ModelPusherConfig)  # Config for pushing
 
 # Importing artifact entities (outputs of each pipeline component)
 from us_visa.entity.artifact_entity import (DataIngestionArtifact, # Artifact produced after ingestion
-                                            DataValidationArtifact)  # Artifact produced after validation
-                                            # DataTransformationArtifact,  # Artifact produced after transformation
+                                            DataValidationArtifact,  # Artifact produced after validation
+                                            DataTransformationArtifact)  # Artifact produced after transformation
                                             # ModelTrainerArtifact,  # Artifact produced after training
                                             # ModelEvaluationArtifact,  # Artifact produced after evaluation
                                             # ModelPusherArtifact)  # Artifact produced after pushing
@@ -30,7 +30,7 @@ class TrainPipeline:  # Defines the entire ML training pipeline class
     def __init__(self):  # Constructor initializes all pipeline configuration objects
         self.data_ingestion_config = DataIngestionConfig()  # Load config for data ingestion
         self.data_validation_config = DataValidationConfig()  # Load config for data validation
-        # self.data_transformation_config = DataTransformationConfig()  # Load config for data transformation
+        self.data_transformation_config = DataTransformationConfig()  # Load config for data transformation
         # self.model_trainer_config = ModelTrainerConfig()  # Load config for model trainer
         # self.model_evaluation_config = ModelEvaluationConfig()  # Load config for model evaluation
         # self.model_pusher_config = ModelPusherConfig()  # Load config for model pushing
@@ -59,16 +59,16 @@ class TrainPipeline:  # Defines the entire ML training pipeline class
         except Exception as e:  # If error occurs
             raise USvisaException(e, sys) from e  # Raise custom exception
 
-    # def start_data_transformation(self, data_ingestion_artifact: DataIngestionArtifact,
-    #                               data_validation_artifact: DataValidationArtifact) -> DataTransformationArtifact:  # Run transformation step
-    #     try:
-    #         data_transformation = DataTransformation(data_ingestion_artifact=data_ingestion_artifact,
-    #                                                  data_transformation_config=self.data_transformation_config,
-    #                                                  data_validation_artifact=data_validation_artifact)  # Create transformation object
-    #         data_transformation_artifact = data_transformation.initiate_data_transformation()  # Run preprocessing (scaling, encoding, etc.)
-    #         return data_transformation_artifact  # Return transformation artifact
-    #     except Exception as e:  # If error occurs
-    #         raise USvisaException(e, sys)  # Raise custom exception
+    def start_data_transformation(self, data_ingestion_artifact: DataIngestionArtifact,
+                                  data_validation_artifact: DataValidationArtifact) -> DataTransformationArtifact:  # Run transformation step
+        try:
+            data_transformation = DataTransformation(data_ingestion_artifact=data_ingestion_artifact,
+                                                     data_transformation_config=self.data_transformation_config,
+                                                     data_validation_artifact=data_validation_artifact)  # Create transformation object
+            data_transformation_artifact = data_transformation.initiate_data_transformation()  # Run preprocessing (scaling, encoding, etc.)
+            return data_transformation_artifact  # Return transformation artifact
+        except Exception as e:  # If error occurs
+            raise USvisaException(e, sys)  # Raise custom exception
 
     # def start_model_trainer(self, data_transformation_artifact: DataTransformationArtifact) -> ModelTrainerArtifact:  # Run training step
     #     try:
@@ -103,9 +103,9 @@ class TrainPipeline:  # Defines the entire ML training pipeline class
         try:
             data_ingestion_artifact = self.start_data_ingestion()  # Step 1: Run ingestion
             data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)  # Step 2: Run validation
-        #     data_transformation_artifact = self.start_data_transformation(
-        #         data_ingestion_artifact=data_ingestion_artifact,
-        #         data_validation_artifact=data_validation_artifact)  # Step 3: Run transformation
+            data_transformation_artifact = self.start_data_transformation(
+                 data_ingestion_artifact=data_ingestion_artifact,
+                 data_validation_artifact=data_validation_artifact)  # Step 3: Run transformation
         #     model_trainer_artifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)  # Step 4: Train model
         #     model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact=data_ingestion_artifact,
         #                                                             model_trainer_artifact=model_trainer_artifact)  # Step 5: Evaluate model

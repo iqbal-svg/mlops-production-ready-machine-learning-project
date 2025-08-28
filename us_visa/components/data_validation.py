@@ -119,7 +119,7 @@ class DataValidation:  # Class responsible for validating data
                 content=report_dict
             )
 
-            # 5. Extract drift results
+            #5. Extract drift results
             drift_info = report_dict["metrics"][0]#["result"]
             n_features = drift_info["number_of_columns"]
             n_drifted_features = drift_info["number_of_drifted_columns"]
@@ -127,6 +127,8 @@ class DataValidation:  # Class responsible for validating data
 
             logging.info(f"{n_drifted_features}/{n_features} features show drift.")
             return dataset_drift
+        
+            
 
         except Exception as e:
             raise USvisaException(e, sys) from e
