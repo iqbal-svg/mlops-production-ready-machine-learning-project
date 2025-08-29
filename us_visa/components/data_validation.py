@@ -120,10 +120,17 @@ class DataValidation:  # Class responsible for validating data
             )
 
             #5. Extract drift results
-            drift_info = report_dict["metrics"][0]#["result"]
-            n_features = drift_info["number_of_columns"]
-            n_drifted_features = drift_info["number_of_drifted_columns"]
-            dataset_drift = drift_info["dataset_drift"]
+            drift_info = report_dict["metrics"][0]["value"]
+            print("drift_info keys:", drift_info.keys())
+            #n_features = drift_info["value"].get("number_of_columns", reference_df.shape[1])
+            #n_features = drift_info["number_of_columns"]
+            n_drifted = drift_info.get("count", 0)
+            share_drifted = drift_info.get("share", 0)
+            n_features = reference_df.shape[1]
+
+            print(f"Drifted columns: {n_drifted}/{n_features}, Share: {share_drifted}")
+            n_drifted_features = drift_info.get("count", 0)
+            dataset_drift = (drift_info.get("share", 0.0) > 0.3)
 
             logging.info(f"{n_drifted_features}/{n_features} features show drift.")
             return dataset_drift
