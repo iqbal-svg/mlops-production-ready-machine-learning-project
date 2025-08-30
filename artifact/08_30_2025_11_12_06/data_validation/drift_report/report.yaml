@@ -1,0 +1,92 @@
+metrics:
+- id: 15e89f895b482f9b84ba7274ed18a106
+  metric_id: DriftedColumnsCount(drift_share=0.5)
+  value:
+    count: 0.0
+    share: 0.0
+- id: 44ed95692690fdd0122a65b138e9060b
+  metric_id: ValueDrift(column=no_of_employees)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - &id001 !!python/object/apply:numpy.dtype
+    args:
+    - f8
+    - false
+    - true
+    state: !!python/tuple
+    - 3
+    - <
+    - null
+    - null
+    - null
+    - -1
+    - -1
+    - 0
+  - !!binary |
+    P0MOnrLclz8=
+- id: a1076b7f552ed954d7a0f7b5e3389aed
+  metric_id: ValueDrift(column=yr_of_estab)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    JGubgetzhz8=
+- id: 3f76acd90ddbe278fb63f5ef3169f600
+  metric_id: ValueDrift(column=prevailing_wage)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    boI0QHCPoD8=
+- id: 331f8786a2cc5d42160cb3239d26369e
+  metric_id: ValueDrift(column=continent)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    JILD4+U4iz8=
+- id: 462f7e3097be07eeb3f21ae6d3142f81
+  metric_id: ValueDrift(column=education_of_employee)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    5YCoNGZdjD8=
+- id: 7f345702abe4aaa71a56794154694dd5
+  metric_id: ValueDrift(column=has_job_experience)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    vmWLIdolYj8=
+- id: cfd219a499d8abe9685c9fea4f9d0abe
+  metric_id: ValueDrift(column=requires_job_training)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    LkmFL6RYgT8=
+- id: fbfc3391582473821b92c93e972d3db4
+  metric_id: ValueDrift(column=region_of_employment)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    uNs7Tq88fD8=
+- id: c29a272390c6fe63a2b4e6762abe77d5
+  metric_id: ValueDrift(column=unit_of_wage)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    acP+WePliz8=
+- id: b0351fb71ee2c17e6fdfa607c6445647
+  metric_id: ValueDrift(column=full_time_position)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    qnCdQ/lUdT8=
+- id: 4a0f71cb37dc97fef945236f625bfaa8
+  metric_id: ValueDrift(column=case_status)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    KiGy9dqERD8=
+- id: 32e9fb9a329ebaf6ac32bf41519d712f
+  metric_id: ValueDrift(column=case_id)
+  value: !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    AAAAAAAA4D8=
+tests: []

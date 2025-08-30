@@ -1,0 +1,48 @@
+grid_search:   # Root key defining grid search settings
+  class: GridSearchCV   # The class used for hyperparameter tuning (GridSearchCV from sklearn)
+  module: sklearn.model_selection   # The module where GridSearchCV is located
+  params:   # Parameters to initialize GridSearchCV
+    cv: 3   # 3-fold cross-validation will be used
+    verbose: 3   # Verbosity level, 3 means detailed logs during fitting
+
+model_selection:   # Root key defining different models to try
+  module_0:   # First model configuration (index 0)
+    class: KNeighborsClassifier   # Model: K-Nearest Neighbors Classifier
+    module: sklearn.neighbors   # Module where KNeighborsClassifier is located
+    params:   # Default parameters for initializing KNN
+      algorithm: kd_tree   # Algorithm used for nearest neighbors search
+      weights: uniform   # All neighbors have equal weight in voting
+      n_neighbors: 3   # Number of neighbors to consider = 3
+    search_param_grid:   # Hyperparameter search space for GridSearchCV
+      algorithm:   # Possible algorithms for neighbor search
+      - auto   # Let sklearn decide the best algorithm
+      - ball_tree   # Ball tree structure
+      - kd_tree   # KD-tree structure
+      - brute   # Brute-force search
+      weights:   # Different weighting strategies
+      - uniform   # Equal weight to all neighbors
+      - distance   # Weight by inverse of distance (closer = more influence)
+      n_neighbors:   # Different values for k
+      - 3   # Try k = 3
+      - 5   # Try k = 5
+      - 9   # Try k = 9
+
+  module_1:   # Second model configuration (index 1)
+    class: RandomForestClassifier   # Model: Random Forest Classifier
+    module: sklearn.ensemble   # Module where RandomForestClassifier is located
+    params:   # Default parameters for initializing Random Forest
+      max_depth: 10   # Maximum depth of each tree = 10
+      max_features: sqrt   # Number of features per split = sqrt(total features)
+      n_estimators: 3   # Number of trees in the forest = 3
+    search_param_grid:   # Hyperparameter search space for GridSearchCV
+      max_depth:   # Candidate tree depths
+      - 10   # Depth = 10
+      - 15   # Depth = 15
+      - 20   # Depth = 20
+      max_features:   # Candidate options for feature selection strategy
+      - sqrt   # Square root of total features
+      - log2   # Log2 of total features
+      n_estimators:   # Candidate number of trees
+      - 3   # 3 trees
+      - 5   # 5 trees
+      - 9   # 9 trees
