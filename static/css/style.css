@@ -1,0 +1,165 @@
+.navbar-light .navbar-brand {
+    color: rgba(0, 0, 0, .9);
+}
+
+.navbar-light .navbar-brand {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.formBox {
+    margin-top: 50px;
+    padding: 50px;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    margin-bottom: 50px !important;
+    text-transform: uppercase;
+    font-size: 48px;
+}
+
+.inputBox {
+    position: relative;
+    box-sizing: border-box;
+    margin-bottom: 40px;
+}
+
+.button {
+    width: 100%;
+    background: #00bcd4;
+    color: #fff;
+    border-radius: 0;
+    border: none;
+    outline: none;
+    height: 50px;
+    font-size: 24px;
+}
+
+.input {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 24px;
+    border-bottom: 2px solid rgba(0, 0, 0, .5);
+}
+
+.inputText {
+    position: absolute;
+    line-height: 50px;
+    font-size: 24px;
+    transition: .5s;
+    opacity: 0.5;
+}
+
+.focus .inputText {
+    transform: translateY(-30px);
+    font-size: 18px;
+    opacity: 1;
+    color: #00bcd4;
+}
+
+.btn_train {
+    width: 100%;
+    background: red;
+    color: #fff;
+    border-radius: 0;
+    border: none;
+    outline: none;
+    height: 50px;
+    font-size: 24px;
+}
+
+/* .navbar-light .navbar-brand { # Targets brand/logo inside a light navbar
+    color: rgba(0, 0, 0, .9); # Sets text color to nearly black with 90% opacity
+}
+
+.navbar-light .navbar-brand { # Same element again
+    margin-left: auto; # Automatically centers brand horizontally
+    margin-right: auto; # Works with margin-left to center logo
+}
+
+body { # Styles applied to the entire webpage body
+    margin: 0; # Removes default margin around body
+    padding: 0; # Removes default padding
+    font-family: sans-serif; # Sets a clean, modern sans-serif font
+}
+
+.formBox { # Container class for form
+    margin-top: 50px; # Adds space above the form
+    padding: 50px; # Adds inner spacing inside the form box
+}
+
+h1 { # Styles all <h1> headings
+    margin: 0; # Removes default margin
+    padding: 0; # Removes default padding
+    text-align: center; # Centers text horizontally
+    margin-bottom: 50px !important; # Forces 50px bottom margin, overriding other rules
+    text-transform: uppercase; # Converts text to ALL CAPS
+    font-size: 48px; # Large font size for emphasis
+}
+
+.inputBox { # Container for input field + label
+    position: relative; # Allows absolutely positioned children inside
+    box-sizing: border-box; # Includes padding/border inside width/height
+    margin-bottom: 40px; # Space below each input box
+}
+
+.button { # Styles for general button class
+    width: 100%; # Full width button
+    background: #00bcd4; # Cyan background color
+    color: #fff; # White text
+    border-radius: 0; # Square edges (no rounded corners)
+    border: none; # Removes border
+    outline: none; # Removes focus outline
+    height: 50px; # Fixed button height
+    font-size: 24px; # Larger text size
+}
+
+.input { # Input field styling
+    position: relative; # Allows inner positioning
+    width: 100%; # Takes full width of container
+    height: 50px; # Fixed input height
+    background: transparent; # No background color
+    border: none; # Removes default border
+    outline: none; # Removes browser’s default outline on focus
+    font-size: 24px; # Larger input text size
+    border-bottom: 2px solid rgba(0, 0, 0, .5); # Adds thin semi-transparent underline
+}
+
+.inputText { # Label text that sits inside input until focus
+    position: absolute; # Positioned relative to parent (inputBox)
+    line-height: 50px; # Aligns vertically with input height
+    font-size: 24px; # Initial font size
+    transition: .5s; # Smooth animation on changes
+    opacity: 0.5; # Semi-transparent label
+}
+
+.focus .inputText { # When inputBox has 'focus' class
+    transform: translateY(-30px); # Moves label upward
+    font-size: 18px; # Shrinks font size
+    opacity: 1; # Makes label fully visible
+    color: #00bcd4; # Changes color to cyan
+}
+
+.btn_train { # Special button (training action)
+    width: 100%; # Full width button
+    background: red; # Red background color
+    color: #fff; # White text
+    border-radius: 0; # No rounded edges
+    border: none; # Removes border
+    outline: none; # Removes outline
+    height: 50px; # Fixed height
+    font-size: 24px; # Large readable text
+} */
